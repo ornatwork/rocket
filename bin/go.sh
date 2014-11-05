@@ -1,2 +1,2 @@
-java -cp .:pi4j-core.jar Server
+java -cp .:pi4j-core.jar us/kristjansson/rocket/Server
 

@@ -19,49 +19,24 @@ public class Board
 	
 	static void Blink()
 	{
-        System.out.println("<--Pi4J--> GPIO Blink Example ... started.");
+        System.out.println("Blink leds...");
         
         // create gpio controller
         final GpioController gpio = GpioFactory.getInstance();
-        
-        // provision gpio pin #01 & #03 as an output pins and blink
+        // provision gpio pins #01 and #03 as an output pin and blink
         final GpioPinDigitalOutput led1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01);
         final GpioPinDigitalOutput led2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03);
 
-        // provision gpio pin #02 as an input pin with its internal pull down resistor enabled
-        final GpioPinDigitalInput myButton = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
-
-        // create and register gpio pin listener
-        myButton.addListener(new GpioPinListenerDigital() 
-        {
-                @Override
-                public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) 
-                {
-                    // when button is pressed, speed up the blink rate on LED #2
-                    if(event.getState().isHigh()){
-                      led2.blink(200);
-                    }                        
-                    else{
-                      led2.blink(1000);
-                    }
-                }
-            });
-
-        // continuously blink the led every 1/2 second for 15 seconds
-        led1.blink(500, 15000);
-
-        // continuously blink the led every 1 second 
-        led2.blink(1000);
+        // continuously blink the led every  
+        led1.blink(250);
+        led2.blink(250);
         
-        System.out.println(" ... the LED will continue blinking until the program is terminated.");
-        System.out.println(" ... PRESS <CTRL-C> TO STOP THE PROGRAM.");
-        
-        // keep program running until user aborts (CTRL-C)
-        for (;;) 
+        // Wait for 3 secs
+        for( int i=3; i > -1; i--) 
         {
             try 
             {
-				Thread.sleep(500);
+				Thread.sleep(1000);
 			} 
             catch (InterruptedException e) 
             {
@@ -69,6 +44,10 @@ public class Board
 			}
         }
         
+        // Stop blinking
+        led1.clearProperties();
+        led2.clearProperties();
+
         // stop all GPIO activity/threads
         // (this method will forcefully shutdown all GPIO monitoring threads and scheduled tasks)
         // gpio.shutdown();   <--- implement this method call if you wish to terminate the Pi4J GPIO controller
@@ -78,7 +57,7 @@ public class Board
 	// Fires the rocket using GPIO on the RaspBerry 	
 	static void Fire()
 	{
-	
+		System.out.println("Fire rocket !");
 	}
 	
 	

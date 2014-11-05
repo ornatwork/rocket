@@ -15,10 +15,8 @@ class Server
 	private static final int PORT_NUMBER = 7007; 
 	
 	// First authorise 
-	private enum Authoration_State { START, USER, PASS, LOGGED_IN };
 	private static Authoration_State AuthState = Authoration_State.START;
 	// then tranactions
-	private enum Transaction_State { START, READY_FIRE, FIRE };
 	private static Transaction_State TransState = Transaction_State.START;
 	
 	// Replies
