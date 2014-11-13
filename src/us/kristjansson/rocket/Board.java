@@ -25,11 +25,11 @@ public class Board
         final GpioController gpio = GpioFactory.getInstance();
         // provision gpio pins #01 and #03 as an output pin and blink
         final GpioPinDigitalOutput led1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01);
-        final GpioPinDigitalOutput led2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03);
+        //final GpioPinDigitalOutput led2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03);
 
         // continuously blink the led every  
         led1.blink(250);
-        led2.blink(250);
+        //led2.blink(250);
         
         // Wait for 3 secs
         for( int i=3; i > -1; i--) 
@@ -46,7 +46,7 @@ public class Board
         
         // Stop blinking
         led1.clearProperties();
-        led2.clearProperties();
+        //led2.clearProperties();
 
         // stop all GPIO activity/threads
         // (this method will forcefully shutdown all GPIO monitoring threads and scheduled tasks)

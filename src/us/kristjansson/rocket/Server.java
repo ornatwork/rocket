@@ -36,7 +36,7 @@ class Server
 	private static final String NOOP = "NOOP";
 	private static final String QUIT = "QUIT";
 	// ARM and FIRE the rocket - Caution HOT HOT !!!
-	private static final String ARM = "ARM";
+	private static final String ARMD = "ARMD";
 	private static final String FIRE = "FIRE";
 		
 	
@@ -135,7 +135,7 @@ class Server
 				}
 				else
 				{
-					sRet = ERR + " sorry, no rockets for you here" + EOL;
+					sRet = ERR + " sorry, no rockets for you" + EOL;
 					AuthState = Authoration_State.USER;
 				}
 			}
@@ -166,7 +166,7 @@ class Server
 				else
 					sRet = OK + " rocket is NOT ARMED" + EOL;
 			}		
-			if( psRequest.equals( ARM ) )
+			if( psRequest.equals( ARMD ) )
 			{
 				TransState = Transaction_State.READY_FIRE;
 				sRet = OK + " rocket is ARMED, ready to lunch" + EOL;

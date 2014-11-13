@@ -9,8 +9,42 @@
     tools:context="us.kristjansson.rocket.rocketluncher.FxMain" >
 
     <TextView
+        android:id="@+id/lbHello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
+
+    <Button
+        android:id="@+id/btConnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/lbHello"
+        android:layout_below="@+id/lbHello"
+        android:layout_marginTop="16dp"
+        android:text="@string/connect" />
+
+    <Button
+        android:id="@+id/btDisconnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btConnect"
+        android:layout_alignBottom="@+id/btConnect"
+        android:layout_toRightOf="@+id/btConnect"
+        android:text="Disconnect" />
+
+    <EditText
+        android:id="@+id/txTerminal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btConnect"
+        android:layout_below="@+id/btConnect"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:lines="10"
+        android:minLines="10" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>

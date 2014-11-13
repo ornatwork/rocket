@@ -1,22 +1,61 @@
 //
 package us.kristjansson.rocket.rocketluncher;
 //
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.Socket;
+
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+//
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+//
+import android.os.*;
 
 
 public class FxMain extends ActionBarActivity 
 {
 
+	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		// Wire up button listener
+	    Button button = (Button)findViewById(R.id.btConnect);
+	    button.setOnClickListener(mListener);
 	}
 
+	// Create the listener 
+	private OnClickListener mListener = new OnClickListener() 
+	{
+	    public void onClick(View v) 
+	    {
+	    	// Do something fun !
+	    	myClick();
+	    }
+	};
+	
+	// Implement the OnClickListener callback
+    public void myClick()
+    {
+		//
+		EditText txTerm = (EditText)findViewById(R.id.txTerminal);
+		txTerm.setText( "switching threads");
+
+		// Call background thread
+		AsyncTask task = new CxClientSocket().execute("Nothing");
+		
+		
+    }
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
