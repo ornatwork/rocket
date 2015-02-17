@@ -4,7 +4,6 @@ package us.kristjansson.rocket.rocketluncher;
 import android.support.v7.app.ActionBarActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,8 +35,8 @@ public class FxMain extends ActionBarActivity
 	    button2.setOnClickListener(mListener2);
 	    
 	    // Advertise version
-		EditText txVer = (EditText)findViewById(R.id.lbVersion);
-		txVer.setText( "Version: " + msVersion );
+		//EditText txVer = (EditText)findViewById(R.id.lbVersion);
+		//txVer.setText( "Version: " + msVersion );
 	}
 
 	// Create the listener 
@@ -63,14 +62,14 @@ public class FxMain extends ActionBarActivity
 	// Implement the OnClickListener callback
     public void myClick2()
     {
+		// Collect the command 
+		EditText txTerm = (EditText)findViewById(R.id.txCommand);
+		String sendCommand = txTerm.getText().toString();
+		// Wipe out the last command
+		txTerm.setText("");
 		//
-		EditText txTerm = (EditText)findViewById(R.id.txTerminal);
-		txTerm.setText( "Sending command to server " + "\n"  );
-
 		if( mConnection != null )
-		{
-			mConnection.sendCommand( "USER batman");
-		}
+			mConnection.sendCommand( sendCommand );
     }
 
     
@@ -79,7 +78,7 @@ public class FxMain extends ActionBarActivity
     {
 		//
 		EditText txTerm = (EditText)findViewById(R.id.txTerminal);
-		txTerm.setText( "Connecting to server " + "\n"  );
+		txTerm.setText( "Connecting to server " + '\n'  );
 
 		String sRet = ""; 
 		// Call background thread
@@ -171,7 +170,7 @@ public class FxMain extends ActionBarActivity
 	        CxLogger.i("onProgressUpdate");
 	        // Responses from server 
 	        EditText txTerm = (EditText)findViewById(R.id.txTerminal);
-	        txTerm.setText( txTerm.getText() + values[0].toString() );
+	        txTerm.setText( txTerm.getText() + values[0].toString() + '\n' );
 	    }
 	}
 

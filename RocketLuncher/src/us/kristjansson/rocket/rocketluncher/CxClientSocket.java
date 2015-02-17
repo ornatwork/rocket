@@ -58,25 +58,28 @@ public class CxClientSocket
     	 {
     		 try
     		 {
-	    		 String sTemp = msCommand;
-	    		 msCommand = "";
 	    		 if( msResponse != null && mMessageListener != null) 
 	        	 {
-	    			if( sTemp.length() > 0 )
+	    			if( msCommand.length() > 0 )
 	    			{
-	    				outToServer.writeBytes( sTemp + '\n');
+	    				outToServer.writeBytes( msCommand + '\n');
 	    				// 	Read server response
 	    				msResponse = inFromServer.readLine();
 	    				CxLogger.e("from server=" + msResponse );
 	    				mMessageListener.messageReceived( msResponse );
+	    				
+	    				
+	    				if( msCommand.equals("QUIT"))
+		   	    		{
+		   	    			 mbRun = false;
+		   	    			 this.Close();
+		   	    		}
+		   	    		// wipe clean
+		   	    		msCommand = "";
 	    			}
 	        	 }
 	    		 
-	    		 if( sTemp.equals("QUIT"))
-	    		 {
-	    			 mbRun = false;
-	    			 this.Close();
-	    		 }
+	    		 
     		 }
     		 catch( Exception ex )
     		 {
