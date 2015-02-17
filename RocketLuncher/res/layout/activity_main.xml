@@ -47,4 +47,13 @@
         <requestFocus />
     </EditText>
 
+    <EditText
+        android:id="@+id/lbVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txTerminal"
+        android:layout_below="@+id/txTerminal"
+        android:layout_marginTop="20dp"
+        android:ems="10" />
+
 </RelativeLayout>

@@ -1,28 +1,28 @@
 //
 package us.kristjansson.rocket.rocketluncher;
 //
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.Socket;
-
 import android.support.v7.app.ActionBarActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
-//
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-//
-import android.os.*;
 
 
 public class FxMain extends ActionBarActivity 
 {
 
+	// privates
+	//private boolean mBound = true;
+	private CxClientSocket mConnection = null;
+	private String msVersion = "0.0.0.1";
+	private ConnectTask mConnect = new ConnectTask();
 	 
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -31,8 +31,25 @@ public class FxMain extends ActionBarActivity
 		// Wire up button listener
 	    Button button = (Button)findViewById(R.id.btConnect);
 	    button.setOnClickListener(mListener);
+		// Wire up button listener
+	    Button button2= (Button)findViewById(R.id.btDisconnect);
+	    button2.setOnClickListener(mListener2);
+	    
+	    // Advertise version
+		EditText txVer = (EditText)findViewById(R.id.lbVersion);
+		txVer.setText( "Version: " + msVersion );
 	}
 
+	// Create the listener 
+	private OnClickListener mListener2 = new OnClickListener() 
+	{
+	    public void onClick(View v) 
+	    {
+	    	// Do something fun !
+	    	myClick2();
+	    }
+	};
+	
 	// Create the listener 
 	private OnClickListener mListener = new OnClickListener() 
 	{
@@ -42,19 +59,44 @@ public class FxMain extends ActionBarActivity
 	    	myClick();
 	    }
 	};
-	
+
+	// Implement the OnClickListener callback
+    public void myClick2()
+    {
+		//
+		EditText txTerm = (EditText)findViewById(R.id.txTerminal);
+		txTerm.setText( "Sending command to server " + "\n"  );
+
+		if( mConnection != null )
+		{
+			mConnection.sendCommand( "USER batman");
+		}
+    }
+
+    
 	// Implement the OnClickListener callback
     public void myClick()
     {
 		//
 		EditText txTerm = (EditText)findViewById(R.id.txTerminal);
-		txTerm.setText( "switching threads");
+		txTerm.setText( "Connecting to server " + "\n"  );
 
+		String sRet = ""; 
 		// Call background thread
-		AsyncTask task = new CxClientSocket().execute("Nothing");
-		
-		
+		//if( mBound )
+		//{
+			if( this.mConnect != null )
+			{
+				mConnect.execute( "start" );
+			}
+			else
+			{
+				//sRet = mService.sendCommand( "QUIT" );
+			}
+		//}
     }
+    
+   
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
@@ -77,4 +119,64 @@ public class FxMain extends ActionBarActivity
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+
+	@Override
+	protected void onPause() 
+	{
+	    super.onPause();
+	    if( mConnect != null) 
+	    {
+	    	mConnect.cancel(true);
+	    }
+	    
+	    if( this.mConnection != null) 
+	    {
+	        CxLogger.i("stopClient");
+	        mConnection.Close();
+	        mConnection = null;
+	    }
+	}
+
+	
+	public class ConnectTask extends AsyncTask<String, String, CxClientSocket> 
+	{
+
+	    @Override
+	    protected CxClientSocket doInBackground(String... message) 
+	    {
+	    	CxLogger.i("doInBackground");
+
+	        // we create a TCPClient object and
+	        mConnection = new CxClientSocket( new CxClientSocket.OnMessageReceived() 
+	        {
+	            @Override
+	            // here the messageReceived method is implemented
+	            public void messageReceived(String message) 
+	            {
+	                // this method calls the onProgressUpdate
+	                publishProgress(message);
+	            }
+	        });
+	        //
+	        mConnection.run();
+
+	        return null;
+	    }
+
+	    @Override
+	    protected void onProgressUpdate(String... values) 
+	    {
+	        super.onProgressUpdate(values);
+	        CxLogger.i("onProgressUpdate");
+	        // Responses from server 
+	        EditText txTerm = (EditText)findViewById(R.id.txTerminal);
+	        txTerm.setText( txTerm.getText() + values[0].toString() );
+	    }
+	}
+
 }
+
+
+
+
