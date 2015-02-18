@@ -20,8 +20,8 @@ class Server
 	private static Transaction_State TransState = Transaction_State.START;
 	
 	// Replies
-	private static String OK = "Server: +OK";
-	private static String ERR = "Server: -ERR";
+	private static String OK = "+OK";
+	private static String ERR = "-ERR";
 	private static final String EOL = "\n";
 	
 	// Hardcoded User
@@ -77,7 +77,7 @@ class Server
 
 	            	// Get client input
 	            	clientRequest = fromClient.readLine();
-	            	System.out.println("Client: " + clientRequest );
+	            	System.out.println( clientRequest );
 		
 		            // Null if client has disconnected 
 		            if( clientRequest == null )

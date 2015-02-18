@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class FxMain extends ActionBarActivity 
@@ -18,7 +19,7 @@ public class FxMain extends ActionBarActivity
 	// privates
 	//private boolean mBound = true;
 	private CxClientSocket mConnection = null;
-	private String msVersion = "0.0.0.1";
+	private String msVersion = "0.0.0.2";
 	private ConnectTask mConnect = new ConnectTask();
 	 
     
@@ -35,8 +36,8 @@ public class FxMain extends ActionBarActivity
 	    button2.setOnClickListener(mListener2);
 	    
 	    // Advertise version
-		//EditText txVer = (EditText)findViewById(R.id.lbVersion);
-		//txVer.setText( "Version: " + msVersion );
+	    TextView lbVer = (TextView)findViewById(R.id.lbVersion);
+	    lbVer.setText( "Version: " + msVersion );
 	}
 
 	// Create the listener 
@@ -63,13 +64,19 @@ public class FxMain extends ActionBarActivity
     public void myClick2()
     {
 		// Collect the command 
-		EditText txTerm = (EditText)findViewById(R.id.txCommand);
-		String sendCommand = txTerm.getText().toString();
+		EditText txCommand = (EditText)findViewById(R.id.txCommand);
+		String sendCommand = txCommand.getText().toString();
 		// Wipe out the last command
-		txTerm.setText("");
+		txCommand.setText("");
 		//
 		if( mConnection != null )
+		{
+	        // Responses from server 
+	        EditText txTerm = (EditText)findViewById(R.id.txTerminal);
+	        txTerm.setText( txTerm.getText() + sendCommand + '\n' );
+	        //
 			mConnection.sendCommand( sendCommand );
+		}
     }
 
     
@@ -78,7 +85,7 @@ public class FxMain extends ActionBarActivity
     {
 		//
 		EditText txTerm = (EditText)findViewById(R.id.txTerminal);
-		txTerm.setText( "Connecting to server " + '\n'  );
+		txTerm.setText( "Connecting to server... " + '\n'  );
 
 		String sRet = ""; 
 		// Call background thread
