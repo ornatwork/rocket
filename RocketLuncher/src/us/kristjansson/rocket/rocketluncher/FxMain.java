@@ -2,15 +2,19 @@
 package us.kristjansson.rocket.rocketluncher;
 //
 import android.support.v7.app.ActionBarActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 
 public class FxMain extends ActionBarActivity 
@@ -28,12 +32,17 @@ public class FxMain extends ActionBarActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		// Wire up button listener
 	    Button button = (Button)findViewById(R.id.btConnect);
-	    button.setOnClickListener(mListener);
+	    button.setOnClickListener(mConnectListener);
 		// Wire up button listener
 	    Button button2= (Button)findViewById(R.id.btDisconnect);
-	    button2.setOnClickListener(mListener2);
+	    button2.setOnClickListener(mSendListener);
+	    // Wire up Enter key listener for commands
+	    EditText txCommand= (EditText)findViewById(R.id.txCommand);
+	    //txCommand.setOnEditorActionListener(CommandListener);
+	    txCommand.setOnEditorActionListener(new DoneOnEditorActionListener());
 	    
 	    // Advertise version
 	    TextView lbVer = (TextView)findViewById(R.id.lbVersion);
@@ -41,35 +50,36 @@ public class FxMain extends ActionBarActivity
 	}
 
 	// Create the listener 
-	private OnClickListener mListener2 = new OnClickListener() 
+	private OnClickListener mSendListener= new OnClickListener() 
 	{
 	    public void onClick(View v) 
-	    {
-	    	// Do something fun !
-	    	myClick2();
-	    }
+	    	{
+	    	CxLogger.i("***************************** onCLick @@@ ");
+	    	clickSend(); 
+	    	}
 	};
 	
 	// Create the listener 
-	private OnClickListener mListener = new OnClickListener() 
+	private OnClickListener mConnectListener = new OnClickListener() 
 	{
 	    public void onClick(View v) 
-	    {
-	    	// Do something fun !
-	    	myClick();
-	    }
+	    	{
+	    		
+	    		clickConnect(); 
+	    	}
 	};
 
 	// Implement the OnClickListener callback
-    public void myClick2()
+    public void clickSend()
     {
 		// Collect the command 
 		EditText txCommand = (EditText)findViewById(R.id.txCommand);
 		String sendCommand = txCommand.getText().toString();
 		// Wipe out the last command
-		txCommand.setText("");
+		//txCommand.setText("");
 		//
-		if( mConnection != null )
+		CxLogger.i("***************************** clickSend=" + sendCommand );
+		if( mConnection != null && sendCommand != null && sendCommand.length() > 0 )
 		{
 	        // Responses from server 
 	        EditText txTerm = (EditText)findViewById(R.id.txTerminal);
@@ -81,28 +91,41 @@ public class FxMain extends ActionBarActivity
 
     
 	// Implement the OnClickListener callback
-    public void myClick()
+    public void clickConnect()
     {
 		//
 		EditText txTerm = (EditText)findViewById(R.id.txTerminal);
 		txTerm.setText( "Connecting to server... " + '\n'  );
 
 		String sRet = ""; 
-		// Call background thread
-		//if( mBound )
-		//{
-			if( this.mConnect != null )
-			{
-				mConnect.execute( "start" );
-			}
-			else
-			{
-				//sRet = mService.sendCommand( "QUIT" );
-			}
-		//}
+		if( this.mConnect != null )
+			mConnect.execute( "start" );
+
     }
     
-   
+  
+    // Listen for the ENTER key and send command over the wire
+    class DoneOnEditorActionListener implements OnEditorActionListener 
+    {
+	    @Override
+	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) 
+	    {
+	    	CxLogger.i("***************************** actionId=" + actionId );
+	    	CxLogger.i("***************************** keyCode=" + event.getKeyCode()   );
+	    	CxLogger.i("***************************** getAction=" + event.getAction()   );
+	    	
+	    	// Enter pressed, do the Dew
+	    	if( event.getAction()  == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER )
+	    	{	
+	    		CxLogger.i("***************************** keyCode = ENTER" );
+	    		// Does the same as hitting the send button
+	    		clickSend();
+	    		return true;
+	    	}
+	        return false;
+	    }
+    }
+    
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
@@ -164,7 +187,7 @@ public class FxMain extends ActionBarActivity
 	                publishProgress(message);
 	            }
 	        });
-	        //
+	        // kick off
 	        mConnection.run();
 
 	        return null;
@@ -177,7 +200,9 @@ public class FxMain extends ActionBarActivity
 	        CxLogger.i("onProgressUpdate");
 	        // Responses from server 
 	        EditText txTerm = (EditText)findViewById(R.id.txTerminal);
-	        txTerm.setText( txTerm.getText() + values[0].toString() + '\n' );
+	        //txTerm.setText( txTerm.getText() + values[0].toString() + '\n' );
+	        txTerm.append( values[0].toString() + '\n' );
+	        txTerm.setMovementMethod(new ScrollingMovementMethod());
 	    }
 	}
 

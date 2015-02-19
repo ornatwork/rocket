@@ -18,13 +18,13 @@ import android.content.Intent;
 public class CxClientSocket 
 {
 	// IP and port 
-	private static final String HOST = "192.168.1.10";
+	//private static final String HOST = "192.168.1.10";
+	private static final String HOST = "10.17.181.101";
 	//private static final String HOST = "localhost";
 	//private static final String HOST = "127.0.0.1";
 	private static final int PORT_NUMBER = 7007;
 	//
 	private static Socket clientSocket = null;
-	private static BufferedReader inFromUser = null;
 	private static DataOutputStream outToServer = null;
 	private static BufferedReader inFromServer = null;
 	//
@@ -103,7 +103,6 @@ public class CxClientSocket
 		try
 		{
 			 clientSocket = new Socket( HOST, PORT_NUMBER );
-			 inFromUser = new BufferedReader( new InputStreamReader(System.in));
 			 outToServer = new DataOutputStream(clientSocket.getOutputStream());
 			 
 			 // Connect and interact with the server

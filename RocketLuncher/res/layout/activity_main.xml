@@ -1,19 +1,46 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="us.kristjansson.rocket.rocketluncher.FxMain" >
 
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        
+    <Button
+        android:id="@+id/btConnect"
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:text="@string/connect" />
+    
+        <Button
+        android:id="@+id/btDisconnect"
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:text="@string/send_command" />
+	</LinearLayout>
+
+    <TextView
+        android:id="@+id/lbCommand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/command" />
+        
     <EditText
         android:id="@+id/txCommand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txTerminal"
-        android:layout_below="@+id/btConnect"
         android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="text"
@@ -21,57 +48,24 @@
         android:minLines="10" />
 
     <TextView
-        android:id="@+id/lbCommand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/btConnect"
-        android:layout_alignRight="@+id/txCommand"
-        android:layout_below="@+id/btConnect"
-        android:text="Command" />
-
-    <Button
-        android:id="@+id/btDisconnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/btConnect"
-        android:layout_toRightOf="@+id/btConnect"
-        android:text="@string/send_command" />
-
-    <Button
-        android:id="@+id/btConnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="@string/connect" />
-
-    <TextView
         android:id="@+id/TextView01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txCommand"
-        android:layout_below="@+id/txCommand"
-        android:text="Conversation" />
+        android:text="@string/conversation" />
 
     <EditText
         android:id="@+id/txTerminal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/lbVersion"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/TextView01"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:ems="10"
         android:inputType="textMultiLine"
-        android:lines="10"
-        android:minLines="10" />
+        android:gravity="bottom" />
 
     <TextView
         android:id="@+id/lbVersion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txTerminal"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/btDisconnect"
         android:text="@string/version" />
 
-</RelativeLayout>
+</LinearLayout>
