@@ -162,14 +162,14 @@ class Server
 			if( psRequest.equals( STAT ) )
 			{
 				if( TransState == Transaction_State.READY_FIRE )
-					sRet = OK + " rocket is ARMED, ready to lunch" + EOL;
+					sRet = OK + " rocket is ARMED, ready to launch" + EOL;
 				else
 					sRet = OK + " rocket is NOT ARMED" + EOL;
 			}		
 			if( psRequest.equals( ARMD ) )
 			{
 				TransState = Transaction_State.READY_FIRE;
-				sRet = OK + " rocket is ARMED, ready to lunch" + EOL;
+				sRet = OK + " rocket is ARMED, ready to launch" + EOL;
 			}
 			if( psRequest.equals( RSET ))
 			{
@@ -181,7 +181,7 @@ class Server
 				if( TransState == Transaction_State.READY_FIRE )
 				{
 					TransState = Transaction_State.FIRE;
-					sRet = OK + " lunching rocket, WATCH OUT !" + EOL;
+					sRet = OK + " launching rocket, WATCH OUT !" + EOL;
 				}
 				else
 					sRet = ERR + " rocket is NOT ARMED" + EOL;
