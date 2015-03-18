@@ -9,5 +9,6 @@
     <string name="version">Version</string>
     <string name="conversation">Conversation</string>
     <string name="command">Command</string>
+    <string name="title_activity_luncher">LuncherActivity</string>
 
 </resources>
