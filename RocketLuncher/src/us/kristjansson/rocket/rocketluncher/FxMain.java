@@ -4,6 +4,8 @@ package us.kristjansson.rocket.rocketluncher;
 //
 import android.support.v7.app.ActionBarActivity;
 import android.text.method.ScrollingMovementMethod;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -179,7 +181,35 @@ public class FxMain extends ActionBarActivity {
 			// Add to the conversation
 			txTerm.append(values[0].toString() + '\n');
 			txTerm.setMovementMethod(new ScrollingMovementMethod());
+			
+			// When ARMED
+			if( values[0].toString().indexOf("+OK rocket is ARMED") > -1 )
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder( getApplicationContext() );
+				builder.setMessage("Do you want to switch to Launcher mode?")
+					.setPositiveButton("Yes", dialogClickListener)
+				    .setNegativeButton("No", dialogClickListener).show();
+			
+			}
 		}
 	}
+	
+	// Dialog listener
+	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() 
+	{
+	    @Override
+	    public void onClick(DialogInterface dialog, int which) {
+	        switch (which){
+	        case DialogInterface.BUTTON_POSITIVE:
+	            //Yes button clicked
+	            break;
+
+	        case DialogInterface.BUTTON_NEGATIVE:
+	            //No button clicked
+	            break;
+	        }
+	    }
+	};
+	
 
 }
