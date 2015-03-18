@@ -23,7 +23,7 @@ public class FxMain extends ActionBarActivity {
 	// privates
 	// private boolean mBound = true;
 	private CxClientSocket mConnection = null;
-	private String msVersion = "0.0.0.2";
+	private String msVersion = "0.0.0.3";
 	private ConnectTask mConnect = new ConnectTask();
 
 	@Override
@@ -184,7 +184,7 @@ public class FxMain extends ActionBarActivity {
 			// When ARMED
 			if( values[0].toString().indexOf("+OK rocket is ARMED") > -1 )
 			{
-				AlertDialog.Builder builder = new AlertDialog.Builder( getApplicationContext() );
+				AlertDialog.Builder builder = new AlertDialog.Builder( FxMain.this );
 				builder.setMessage("Do you want to switch to Launcher mode?")
 					.setPositiveButton("Yes", dialogClickListener)
 				    .setNegativeButton("No", dialogClickListener).show();
