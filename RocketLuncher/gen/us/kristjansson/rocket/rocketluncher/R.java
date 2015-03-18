@@ -1078,6 +1078,8 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
         public static final int ic_launcher=0x7f020057;
+        public static final int rocket_launch=0x7f020058;
+        public static final int rocket_wait=0x7f020059;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1091,11 +1093,13 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f050043;
+        public static final int action_settings=0x7f050046;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
+        public static final int btAbort=0x7f050044;
         public static final int btConnect=0x7f05003c;
+        public static final int btLaunch=0x7f050043;
         public static final int btSend=0x7f05003d;
         public static final int checkbox=0x7f05002d;
         public static final int collapseActionView=0x7f05000d;
@@ -1111,6 +1115,7 @@ containing a value of this type.
         public static final int homeAsUp=0x7f050005;
         public static final int icon=0x7f05002a;
         public static final int ifRoom=0x7f05000a;
+        public static final int imRocket=0x7f050045;
         public static final int image=0x7f050027;
         public static final int lbCommand=0x7f05003e;
         public static final int lbConversation=0x7f050040;

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Rocket launcher</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">Hello second activity</string>
     <string name="action_settings">Settings</string>
     <string name="connect">Connect</string>
     <string name="send_command">Send</string>

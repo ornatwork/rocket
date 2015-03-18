@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -184,10 +185,16 @@ public class FxMain extends ActionBarActivity {
 			// When ARMED
 			if( values[0].toString().indexOf("+OK rocket is ARMED") > -1 )
 			{
+				
+				Intent intent = new Intent( FxMain.this, FxLauncher.class);
+	            startActivity(intent);
+	            
+				/*
 				AlertDialog.Builder builder = new AlertDialog.Builder( FxMain.this );
 				builder.setMessage("Do you want to switch to Launcher mode?")
 					.setPositiveButton("Yes", dialogClickListener)
 				    .setNegativeButton("No", dialogClickListener).show();
+				    */
 			
 			}
 		}
